@@ -1,0 +1,10 @@
+{
+    "development": {
+        "dialect": "postgres",
+        "user": "default",
+        "host": "ep-jolly-haze-a4z1k35b-pooler.us-east-1.aws.neon.tech",
+        "database": "verceldb",
+        "password": "8yajkRZE5dAl",
+        "port": "5432"
+    }
+}
