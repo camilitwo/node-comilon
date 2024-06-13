@@ -6,7 +6,6 @@
       "outDir": "./dist",
       "rootDir": "./src",
       "strict": true,
-      "moduleResolution": "node",
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
@@ -15,4 +14,3 @@
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
 }
-  

@@ -1,47 +1,35 @@
 import 'reflect-metadata';
-import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import express, { Application } from 'express'; // Importar express de manera correcta
+import { buildSchema } from 'type-graphql';
+import { RegionResolver } from './resolvers/RegionResolver';
 import { AppDataSource } from './ormconfig';
-import { Region } from './entity/region';
-import { Like, Raw } from 'typeorm';
-import {where} from "sequelize";
+import console from 'console';
 
-const app = express();
-const port = 3000;
+(async () => {
+    // Inicializar TypeORM
+    await AppDataSource.initialize();
 
-AppDataSource.initialize()
-    .then(async () => {
-        console.log("Data Source has been initialized!");
+    // Construir esquema GraphQL
+    const schema = await buildSchema({
+        resolvers: [RegionResolver],
+    });
 
-        const regionRepository = AppDataSource.getRepository(Region);
+    // Crear servidor Apollo
+    const server = new ApolloServer({ schema });
 
-        app.get('/create-region', async (req, res) => {
-            const region = new Region();
-            region.region_nombre = "North America";
-            region.region_ordinal = "1";
+    // Crear aplicación Express
+    const app: Application = express(); // Asegúrate de que el tipo es Application
 
-            await regionRepository.save(region);
-            res.send(`Region created: ${JSON.stringify(region)}`);
-        });
-
-        app.get('/regions', async (req, res) => {
-            const regions = await regionRepository.findBy({region_id: 1});
-            res.json(regions);
-        });
-
-        app.get('/regions/search/:nombre', async (req, res) => {
-            const nombre = req.params.nombre;
-            const regions = await regionRepository.find({
-                where: {
-                    region_nombre: Raw(columnAlias => `UPPER(${columnAlias}) LIKE UPPER('%${nombre}%')`)
-                }
-            })
-            res.json(regions);
-        });
+    // Aplicar middleware de Apollo Server a Express
+    await server.start();
+    // @ts-ignore
+    server.applyMiddleware({ app });
 
 
-        app.listen(port, () => {
-            console.log(`App listening at http://localhost:${port}`);
-        });
 
-    })
-    .catch((error) => console.log("Error during Data Source initialization:", error));
+    const PORT = 4000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}/graphql`);
+    });
+})();

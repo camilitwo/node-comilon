@@ -1,19 +1,21 @@
-import {Region} from "./entity/region";
+import {Region} from "./entity/Region";
 import {DataSource} from "typeorm";
+import {Comuna} from "./entity/Comuna";
+import {Provincia} from "./entity/Provincia";
 
 export const AppDataSource: DataSource = new DataSource({
     type: 'postgres',
-    host: 'ep-jolly-haze-a4z1k35b-pooler.us-east-1.aws.neon.tech',
+    host: process.env.DATABASE_URL,
     port: 5432,
-    username: 'default',
-    password: '8yajkRZE5dAl',
-    database: 'verceldb',
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
+    database: process.env.DATABASE_NAME,
     ssl: {
         rejectUnauthorized: false, // by setting to false, you allow connections to SSL sites without valid certificates
     },
     synchronize: true,
     logging: false,
-    entities: [Region],
+    entities: [Region, Comuna, Provincia],
     migrations: [],
     subscribers: []
 });

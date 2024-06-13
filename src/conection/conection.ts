@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
-import { region } from '../entity/region'
+import { region } from '../entity/Region'
 import { AppDataSource } from '../ormconfig'
 
 createConnection().then(async connection => {
