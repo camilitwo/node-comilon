@@ -23,4 +23,8 @@ export class Comuna {
     @ManyToOne(() => Provincia, provincia => provincia.comunas)
     @JoinColumn({ name: 'provincia_id' })
     provincia: Provincia | undefined;
+
+    @Field(() => [Direccion])
+    @OneToMany(() => Direccion, direccion => direccion.comunaDireccion)
+    direcciones: Direccion[] | undefined;
 }

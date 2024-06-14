@@ -5,6 +5,7 @@ import { buildSchema } from 'type-graphql';
 import { RegionResolver } from './resolvers/RegionResolver';
 import { AppDataSource } from './ormconfig';
 import console from 'console';
+import {CardResolver} from "./resolvers/CardResolver";
 
 (async () => {
     // Inicializar TypeORM
@@ -12,7 +13,8 @@ import console from 'console';
 
     // Construir esquema GraphQL
     const schema = await buildSchema({
-        resolvers: [RegionResolver],
+        resolvers: [RegionResolver, CardResolver],
+
     });
 
     // Crear servidor Apollo

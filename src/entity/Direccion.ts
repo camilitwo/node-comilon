@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn} from 'typeorm';
 import { Comuna } from './Comuna';
 import {Persona} from "./Persona";
 import {Field, Int, ObjectType} from "type-graphql";
@@ -19,11 +19,12 @@ export class Direccion {
     @Column({ type: 'varchar' })
     dir_numero: string | undefined;
 
-    @Field(() => Int)
-    @Column({ type: 'integer' })
-    dir_comuna_id: number | undefined;
+    @Field(() => Comuna)
+    @ManyToOne(() => Comuna, comuna => comuna.direcciones)
+    @JoinColumn({ name: 'comuna_id' })
+    comunaDireccion: Comuna | undefined;
 
-    //@Field(() => [Persona])
-    @OneToMany(() => Persona, persona => persona.per_direccion)
+    @Field(() => [Persona])
+    @OneToMany(() => Persona, persona => persona.direccion)
     personas: Persona[] | undefined;
 }

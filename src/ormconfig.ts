@@ -2,6 +2,11 @@ import {Region} from "./entity/Region";
 import {DataSource} from "typeorm";
 import {Comuna} from "./entity/Comuna";
 import {Provincia} from "./entity/Provincia";
+import {Persona} from "./entity/Persona";
+import {Tarjeta} from "./entity/Tarjeta";
+import {Transacciones} from "./entity/Transacciones";
+import {Estado} from "./entity/Estado";
+import {Direccion} from "./entity/Direccion";
 
 export const AppDataSource: DataSource = new DataSource({
     type: 'postgres',
@@ -15,7 +20,7 @@ export const AppDataSource: DataSource = new DataSource({
     },
     synchronize: true,
     logging: false,
-    entities: [Region, Comuna, Provincia],
+    entities: [Region, Comuna, Provincia, Persona, Tarjeta, Transacciones, Estado, Direccion],
     migrations: [],
     subscribers: []
 });

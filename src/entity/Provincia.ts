@@ -24,6 +24,6 @@ export class Provincia {
 
     @Field(() => Region)
     @ManyToOne(() => Region, region => region.provincias)
-    @JoinColumn({ name: 'region_id' }) // Add the @JoinColumn decorator to specify the name of the foreign key column
+    @JoinColumn({ name: 'region_id' })
     region: Region | undefined;
 }
