@@ -8,6 +8,18 @@ const cardRepository = AppDataSource.getRepository(Tarjeta);
 export class CardResolver {
     @Query(() => [Tarjeta], { nullable: true })
     async cards() {
+        const query = cardRepository.createQueryBuilder('card')
+            .leftJoinAndSelect('card.persona', 'persona')
+            .leftJoinAndSelect('card.transacciones', 'transacciones')
+            .leftJoinAndSelect('card.estado', 'estado')
+            .leftJoinAndSelect('persona.direccion', 'direccion')
+            .leftJoinAndSelect('persona.personaEstado', 'personaEstado')
+            .leftJoinAndSelect('direccion.comunaDireccion', 'comunaDireccion')
+            .leftJoinAndSelect('comunaDireccion.provincia', 'provincia')
+            .leftJoinAndSelect('provincia.region', 'region');
+
+        console.log(query.getSql());
+
         return await cardRepository.createQueryBuilder('card')
             .leftJoinAndSelect('card.persona', 'persona')
             .leftJoinAndSelect('card.transacciones', 'transacciones')
