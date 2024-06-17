@@ -3,6 +3,7 @@ import { Persona } from './Persona';
 import { Estado } from './Estado';
 import {Transacciones} from "./Transacciones";
 import {Field, Int, ObjectType} from "type-graphql";
+import {GraphQLDate} from "../scalars/GraphQLScalarType";
 
 @ObjectType()
 @Entity('tarjeta')
@@ -16,8 +17,8 @@ export class Tarjeta {
     @Column({ type: 'varchar' })
     tar_rut: string | undefined;
 
-    @Field(() => Int)
-    @Column({ type: 'integer' })
+    @Field(() => Number)
+    @Column({ type: 'numeric' })
     tar_pan: number | undefined;
 
     @Field(() => Persona, { nullable: true })
@@ -31,20 +32,20 @@ export class Tarjeta {
     @Column({ type: 'integer', name: 'est_id'})
     estado: Estado | undefined;
 
-    @Field(() => Date)
+    @Field(() => GraphQLDate)
     @Column({ type: 'date' })
     tar_fch_registro: Date | undefined;
 
-    @Field(() => Date)
+    @Field(() => GraphQLDate)
     @Column({ type: 'date' })
     tar_fch_cambio_estado: Date | undefined;
 
-    @Field(() => Date)
+    @Field(() => GraphQLDate)
     @Column({ type: 'date' })
     tar_fch_vencimiento: Date | undefined;
 
-    @Field(() => [Transacciones])
-    @OneToMany(() => Transacciones, transacciones => transacciones.tarjeta)
+    @Field(() => [Transacciones], { nullable: true })
+    @OneToMany(() => Transacciones, transacciones => transacciones.tarjeta, { nullable: true })
     transacciones: Transacciones[] | undefined;
 }
 

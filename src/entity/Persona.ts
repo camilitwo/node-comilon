@@ -4,6 +4,7 @@ import { Direccion } from './Direccion';
 import {Tarjeta} from "./Tarjeta";
 import {Field, Int, ObjectType} from "type-graphql";
 import {CHAR} from "sequelize";
+import {GraphQLDate} from "../scalars/GraphQLScalarType";
 
 @ObjectType()
 @Entity('persona')
@@ -33,7 +34,7 @@ export class Persona {
     @Column({ type: 'char' })
     per_sexo: string | undefined;
 
-    @Field(() => Date)
+    @Field(() => GraphQLDate)
     @Column({ type: 'date' })
     per_fch_ingreso: Date | undefined;
 
