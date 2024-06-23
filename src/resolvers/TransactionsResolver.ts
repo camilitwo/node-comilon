@@ -49,7 +49,8 @@ export class TransactionsResolver {
             .leftJoinAndSelect('tarjeta.persona', 'persona')
             .leftJoinAndSelect('persona.direccion', 'direccion')
             .leftJoinAndSelect('persona.personaEstado', 'personaEstado')
-            .leftJoinAndSelect('tarjeta.estado', 'tarjetaEstado');
+            .leftJoinAndSelect('tarjeta.estado', 'tarjetaEstado')
+            .leftJoinAndSelect('transacciones.movimiento', 'movimiento');
         console.log(query.getQuery());
         return query;
     }

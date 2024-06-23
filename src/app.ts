@@ -7,6 +7,8 @@ import { AppDataSource } from './ormconfig';
 import console from 'console';
 import {CardResolver} from "./resolvers/CardResolver";
 import {TransactionsResolver} from "./resolvers/TransactionsResolver";
+import {VWMovementsResolver} from "./resolvers/VWMovementsResolver";
+import {PinLockedResolver} from "./resolvers/PinLockedResolver";
 
 (async () => {
     // Inicializar TypeORM
@@ -14,7 +16,7 @@ import {TransactionsResolver} from "./resolvers/TransactionsResolver";
 
     // Construir esquema GraphQL
     const schema = await buildSchema({
-        resolvers: [RegionResolver, CardResolver, TransactionsResolver],
+        resolvers: [RegionResolver, CardResolver, TransactionsResolver, VWMovementsResolver, PinLockedResolver],
 
     });
 

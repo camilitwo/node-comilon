@@ -1,10 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn, OneToOne} from 'typeorm';
 import { Estado } from './Estado';
 import { Direccion } from './Direccion';
 import {Tarjeta} from "./Tarjeta";
 import {Field, Int, ObjectType} from "type-graphql";
 import {CHAR} from "sequelize";
 import {GraphQLDate} from "../scalars/GraphQLScalarType";
+import {PinEstadoLog} from "./pin-estado-log";
 
 @ObjectType()
 @Entity('persona')

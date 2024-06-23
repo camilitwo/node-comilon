@@ -10,23 +10,31 @@ const estadoRepository = AppDataSource.getRepository(Estado);
 export class CardResolver {
     @Query(() => [Tarjeta], { nullable: true })
     async cards() {
-        const query = this.queryCards();
+        const query = this.queryCards().orderBy('card.tar_fch_registro', 'DESC');;
         return await query.getMany();
     }
 
     @Query(() => Tarjeta, { nullable: true })
     async card(@Arg('pan', () => Int) pan: number) {
-        return await this.queryCards()
-            .where('card.tar_pan = :pan', { pan })
-            .orderBy('card.tar_fch_registro', 'DESC')
-            .getOne();
+        const query = this.queryCards()
+            .where('card.tar_pan = :pan', {pan})
+            .orderBy('card.tar_fch_registro', 'DESC');
+
+        console.log(query.getSql());
+
+        const result = await query.getOne();
+
+
+        return result;
     }
 
     @Query(() => [Tarjeta])
     async searchCards(@Arg('rut', () => String, { nullable: true }) rut?: string) {
         const query = this.queryCards();
         if (rut) {
-            query.where('LOWER(persona.per_rut) LIKE LOWER(:rut)', { rut: `%${rut}%` });
+            query.where('LOWER(persona.per_rut) LIKE LOWER(:rut)', { rut: `%${rut}%` })
+                .orderBy('card.tar_fch_registro', 'DESC')
+                .addOrderBy('card.estado', 'ASC');
         }
 
         return await query.getMany();

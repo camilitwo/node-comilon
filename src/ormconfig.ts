@@ -7,6 +7,10 @@ import {Tarjeta} from "./entity/Tarjeta";
 import {Transacciones} from "./entity/Transacciones";
 import {Estado} from "./entity/Estado";
 import {Direccion} from "./entity/Direccion";
+import {VwMovimientos} from "./entity/VwMovimientos";
+import {TipoMovimiento} from "./entity/TipoMovimiento";
+import {PinRules} from "./entity/pin-rules";
+import {PinEstadoLog} from "./entity/pin-estado-log";
 
 export const AppDataSource: DataSource = new DataSource({
     type: 'postgres',
@@ -20,7 +24,9 @@ export const AppDataSource: DataSource = new DataSource({
     },
     synchronize: true,
     logging: false,
-    entities: [Region, Comuna, Provincia, Persona, Tarjeta, Transacciones, Estado, Direccion],
+    entities: [Region, Comuna, Provincia, Persona, Tarjeta,
+        Transacciones, Estado, Direccion, VwMovimientos,
+        TipoMovimiento, PinRules, PinEstadoLog],
     migrations: [],
     subscribers: []
 });

@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from 'typ
 import { Tarjeta } from './Tarjeta';
 import {Field, Int, ObjectType} from "type-graphql";
 import {GraphQLDate} from "../scalars/GraphQLScalarType";
+import {TipoMovimiento} from "./TipoMovimiento";
 
 @ObjectType()
 @Entity('transacciones')
@@ -31,6 +32,11 @@ export class Transacciones {
     @ManyToOne(() => Tarjeta, tarjeta => tarjeta.transacciones, { nullable: true })
     @JoinColumn({ name: 'tar_id' })
     tarjeta: Tarjeta | undefined;
+
+    @Field(() => TipoMovimiento, { nullable: true })
+    @ManyToOne(() => TipoMovimiento, tipoMovimiento => tipoMovimiento.transacciones, { nullable: true })
+    @JoinColumn({ name: 'mov_id' })
+    movimiento: TipoMovimiento | undefined;
 
 
 }
